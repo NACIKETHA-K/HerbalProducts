@@ -1,3 +1,4 @@
+
 <template>
   <div class="main">
     <div class="announcement-bar text-center">
@@ -16,40 +17,32 @@
           <span class="nav-text d-none d-md-inline">SUBSCRIBE</span>
           <i class="fas fa-search"></i>
           <i class="fas fa-user"></i>
-          <i class="fas fa-shopping-cart"></i>
+          <router-link to="/Cart"><i class="fas fa-shopping-cart"></i></router-link>
         </div>
       </div>
     </nav>
 
     <div class="container products-container mt-5 pt-5">
       <div class="row g-4">
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="product in products" :key="product.name">
-          <router-link :to="`/product/${product.name}`" class="text-decoration-none text-dark">
-
-
-          <div class="card h-100 product-card border-0 shadow-sm rounded-0">
-            <div class="product-badges">
-              <div v-for="badge in product.badges" :key="badge" class="badge bg-light text-dark mb-1">
-                {{ badge }}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3" v-for="product in products" :key="product.slug">
+          <router-link :to="`/product/${product.slug}`" class="text-decoration-none text-dark">
+            <div class="card h-100 product-card border-0 shadow-sm rounded-0">
+              <img :src="product.imageUrl" :alt="product.name" class="card-img-top product-image">
+              <div class="card-body d-flex flex-column text-left pt-2 pb-3">
+                <h5 class="card-title product-name">{{ product.name }}</h5>
+                <p class="card-text product-description text-muted">{{ product.description }}</p>
+                <div class="product-price-wrapper d-flex justify-content-between align-items-center">
+                  <p class="product-price fw-bold mb-0">{{ product.price }}</p>
+                  <div class="product-rating">
+                    <span v-for="n in 5" :key="n" :class="{ 'filled-star': n <= product.rating }">★</span>
+                    <span class="review-count text-muted small">({{ product.reviews }})</span>
+                  </div>
+                </div>
+                <button class="btn add-to-bag-button py-2 rounded-0 mt-3" @click.prevent="addToCart(product)">
+                  {{ product.buttonText }}
+                </button>
               </div>
-              <img v-if="product.name === 'NOURISHING FACE OIL' && product.awardImages[0]" :src="product.awardImages[0]" alt="GetGloss Award 2023" class="award-badge top-right-award">
-              <img v-if="product.name === 'NOURISHING FACE OIL' && product.awardImages[1]" :src="product.awardImages[1]" alt="GetGloss Award 2024" class="award-badge bottom-right-award">
-              <img v-if="product.name === 'HYALURONIC ACID FACE SERUM' && product.awardImages[0]" :src="product.awardImages[0]" alt="As Seen In Glamour" class="award-badge glamour-award">
             </div>
-            <img :src="product.imageUrl" :alt="product.name" class="card-img-top product-image">
-            <div class="card-body d-flex flex-column text-center pt-2 pb-3">
-              <h5 class="card-title product-name mb-1">{{ product.name }}</h5>
-              <p class="card-text product-description text-muted mb-2">{{ product.description }}</p>
-              <div class="product-rating mb-2">
-                <span v-for="n in 5" :key="n" :class="{ 'filled-star': n <= product.rating }">&#9733;</span>
-                <span class="review-count text-muted small">({{ product.reviews }})</span>
-              </div>
-              <p class="product-price fw-bold mb-3 mt-auto">{{ product.price }}</p>
-              <button class="btn add-to-bag-button py-2 rounded-0">
-                {{ product.buttonText }}
-              </button>
-            </div>
-          </div>
           </router-link>
         </div>
       </div>
@@ -68,59 +61,88 @@ export default {
         "SIGN UP TO OUR NEWSLETTER FOR 10% OFF",
         "BEST FACE OIL OF 2024 | NOURISHING FACE OIL",
       ],
-      bannerImages: [
-        { image: "girl2.png", alt: "Fashion Model 1" },
-        { image: "girl1.png", alt: "Fashion Model 2" },
-        { image: "girl1.png", alt: "Fashion Model 3" },
-      ],
       messageInterval: null,
       products: [
         {
-          name: "NOURISHING FACE OIL",
+          name: "Tolerian Purifying cleanser".toUpperCase(),
+          slug: "product1",
           price: "$98.00",
-          description: "Radiance Enhancing Nordic Super Berries",
+          description: "Face Wash for Normal to Oily Skin",
           rating: 5,
           reviews: 20,
-          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw6eebc922/img/tolerianepurifyingfoamingfacialwash/LaRochePosay-Product-Toleriane-Toleriane-Purifying-foaming-cleanser-OLD-PACK-400ml-3337875545822-ATFPackshotFront-1500x1500.jpg?sw=1080&sh=1080&sm=cut&sfrm=jpg&q=70", // Image from your screenshot
-          badges: ["BESTSELLER"],
-          awardImages: [ // GETGLOSS BEAUTY AWARDS GOLD 2024
-          ],
-          buttonText: "ADD TO BAG" // Added button text
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw6eebc922/img/tolerianepurifyingfoamingfacialwash/LaRochePosay-Product-Toleriane-Toleriane-Purifying-foaming-cleanser-OLD-PACK-400ml-3337875545822-ATFPackshotFront-1500x1500.jpg",
+          buttonText: "ADD TO BAG"
         },
         {
-          name: "HYALURONIC ACID FACE SERUM",
-          price: "$94.00",
-          description: "Super Hydrating Seaweed + Tremella",
-          rating: 5,
-          reviews: 10,
-          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw85a71660/img/3337875660570/LaRochePosay-Product-Skincare-PureVitaminC12-30ml-3337875909235-PackshotFront-shadow-1500x1500-Rev.jpg?sw=1080&sh=1080&sm=cut&sfrm=jpg&q=70", // Image from your screenshot
-          badges: ["BESTSELLER"],
-          awardImages: [// AS SEEN IN GLAMOUR
-          ],
-          buttonText: "ADD TO BAG" // Added button text
-        },
-        {
-          name: "CLARIFYING CLAY MASK",
+          name: "Sunscreen for Face with SPF".toUpperCase(),
+          slug: "product2",
           price: "$38.00",
-          description: "Detoxifying Natural Blue Clays",
-          rating: 1, // Based on the single star shown
+          description: "Tinted Mineral Sunscreen for Face",
+          rating: 1,
           reviews: 1,
-          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwdd860fb8/product/March%202023%20packshot%20updates/883140020899-1_Anthelios50_TintedMineral_LightFluid_50ml.jpg?sw=1080&sh=1080&sm=cut&sfrm=jpg&q=70", // Image from your screenshot
-          badges: ["NEW"],
-          buttonText: "ADD TO BAG",
-          awardImages: []
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwdd860fb8/product/March%202023%20packshot%20updates/883140020899-1_Anthelios50_TintedMineral_LightFluid_50ml.jpg",
+          buttonText: "ADD TO BAG"
         },
         {
-          name: "EYE ELIXIR",
+          name: "Hyaluronic Acid Eye Cream".toLocaleUpperCase(),
+          slug: "product3",
           price: "$62.00",
-          description: "Awakening Tea Extracts + Brightening Berries",
-          rating: 2, // Based on the two stars shown
+          description: "Hyaluronic Acid Eye Cream",
+          rating: 3,
+          reviews: 12,
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw57e32c17/product/La-Roche-Posay-Hydraphase-HA-Yeux-15ml-BD-000-3337872412646-Front-FSS.jpg?sw=678&sh=678&sm=cut&sfrm=jpg&q=70",
+          buttonText: "ADD TO BAG"
+        },
+        {
+          name: "Mela B3 Facial Gel Cleanser".toLocaleUpperCase(),
+          slug: "product4",
+          price: "$26.00",
+          description: "Anti-Aging Facial Cleanser ",
+          rating: 2,
           reviews: 2,
-          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwc5151070/img/3337875731409/1_Hydraphase-HA-Rich.jpg?sw=678&sh=678&sm=cut&sfrm=jpg&q=70", // Image from your screenshot
-          badges: [],
-          buttonText: "ADD TO BAG", // Added button text
-          awardImages: []
-        }
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw63cb814c/img/3337875890069/1_La%20Roche%20Posay-Mela-%20B3-Cleanser-PACKSHOT.jpg?sw=1080&sh=1080&sm=cut&sfrm=jpg&q=70",
+          buttonText: "ADD TO BAG"
+        },
+        {
+          name: "Multi-Target Patches".toLocaleUpperCase(),
+          slug: "product5",
+          price: "$12.99",
+          description: "Multi-Targeted Patches for Blemishes",
+          rating: 4,
+          reviews: 15,
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dweb8d5979/img/3337875924887/LaRochePosay-Product-Skincare-Effaclar-Duo+M-Patch-3337875924887-ATF-PIM-packshot-front-1500x1500.jpg?sw=1080&sh=1080&sm=cut&sfrm=jpg&q=70",
+          buttonText: "ADD TO BAG"
+        },
+        {
+          name: "Hyaluronic Acid Face Cream".toLocaleUpperCase(),
+          slug: "product6",
+          price: "$39.00",
+          description: "Natural Hyaluronic Acid Face Cream",
+          rating: 4,
+          reviews: 12,
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwc5151070/img/3337875731409/1_Hydraphase-HA-Rich.jpg?sw=678&sh=678&sm=cut&sfrm=jpg&q=70",
+          buttonText: "ADD TO BAG"
+        },
+        {
+          name: "Hydraphase Intense Serum ".toLocaleUpperCase(),
+          slug: "product7",
+          price: "$36.00",
+          description: "Rehydrating Serum ",
+          rating: 4,
+          reviews: 15,
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw70bd25fd/img/3337872413353/la-roche-posay-hydraphase-serum-with-hyaluronic-acid-3337872413353-1.jpg?sw=678&sh=678&sm=cut&sfrm=jpg&q=70",
+          buttonText: "ADD TO BAG"
+        },
+        {
+          name: "Effaclar Micellar Water".toLocaleUpperCase(),
+          slug: "product8",
+          price: "$17.99",
+          description: "Micellar Water Cleanser for Oily Skin",
+          rating: 4.5,
+          reviews: 8,
+          imageUrl: "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw859507f3/img/effaclarmicellarwaterultra/la-roche-posay-effaclar-micellar-water-for-oily-skin-3337872412516-1.jpg?sw=678&sh=678&sm=cut&sfrm=jpg&q=70",
+          buttonText: "ADD TO BAG"
+        },
       ]
     };
   },
@@ -146,19 +168,39 @@ export default {
         navbar.classList.remove("scrolled");
       }
     },
-  },
+    addToCart(product) {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const existingProductIndex = cart.findIndex(item => item.slug === product.slug);
+
+      if (existingProductIndex > -1) {
+        // Product already in cart, increment quantity
+        cart[existingProductIndex].quantity = (cart[existingProductIndex].quantity || 0) + 1;
+      } else {
+        // Product not in cart, add with quantity 1
+        cart.push({ ...product, quantity: 1 });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Dispatch a custom event to notify other components (like Navbar) about cart update
+      window.dispatchEvent(new Event('cart-updated'));
+
+      console.log('Product added to cart:', product.name, 'Current cart:', cart);
+      // Optional: Add a small visual feedback to the user, e.g., a toast notification
+      alert(`${product.name} added to cart!`); // For demonstration, consider a more subtle UI feedback in a real app
+    }
+  }
 };
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* Global Styles & Header */
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  font-family: 'Montserrat', sans-serif; /* Apply Montserrat to body */
+  font-family: 'Montserrat', sans-serif;
 }
 
 .announcement-bar {
@@ -179,19 +221,18 @@ body {
 
 .custom-navbar {
   position: fixed;
-  top: 30px; /* Below the announcement bar */
+  top: 30px;
   left: 0;
   width: 100%;
-  background-color: transparent; /* Initially transparent */
+  background-color: transparent;
   z-index: 1040;
   transition: all 0.4s ease;
-  padding-top: 15px; /* Add some padding to the navbar */
+  padding-top: 15px;
   padding-bottom: 15px;
 }
 
-/* Navbar background on scroll */
 .custom-navbar.scrolled {
-  background-color: #fff; /* White background when scrolled */
+  background-color: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
@@ -200,52 +241,47 @@ body {
 .navbar i {
   font-weight: 500;
   transition: color 0.3s ease;
-  color: #333; /* Default text color for navbar links */
+  color: #333;
 }
 .navbar-brand {
-    font-family: 'LaSegar-Regular', sans-serif; /* Assuming LaSegar-Regular is imported or defined */
-    color: #333; /* Default color for brand */
+    font-family: 'LaSegar-Regular', sans-serif;
+    color: #333;
     font-weight: bold;
 }
-
 
 .navbar .nav-link:hover,
 .navbar .nav-text:hover,
 .navbar i:hover,
 .navbar-brand:hover {
-  color: #294ea4; /* Hover color */
+  color: #294ea4;
 }
 
-/* Product Cards Container */
-/* Using Bootstrap's container and row for layout */
 .products-container {
-  padding-top: 100px; /* Top padding to clear fixed header */
-  padding-bottom: 50px; /* Bottom padding for space */
+  padding-top: 100px;
+  padding-bottom: 50px;
 }
 
-/* Individual Product Card */
 .product-card {
-  position: relative; /* For absolute positioning of badges */
-  overflow: hidden; /* To contain absolutely positioned children */
-  display: flex; /* Make it a flex container */
-  flex-direction: column; /* Stack children vertically */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
-  transform: translateY(-5px); /* Slight lift on hover */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important; /* More pronounced shadow on hover */
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
 }
 
-/* Product Badges (BESTSELLER, NEW) */
 .product-badges {
   position: absolute;
   top: 10px;
   left: 10px;
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Space between badges */
+  gap: 5px;
   align-items: flex-start;
-  z-index: 5; /* Ensure badges are above image */
+  z-index: 5;
 }
 
 .badge {
@@ -259,23 +295,21 @@ body {
   text-transform: uppercase;
 }
 
-/* Award Badges (Images) */
 .award-badge {
     position: absolute;
-    width: 65px; /* Adjust size as needed */
+    width: 65px;
     height: auto;
-    z-index: 6; /* Ensure award badges are above text badges */
-    /* Remove transformX, rely on right positioning */
+    z-index: 6;
 }
 
 .top-right-award {
-    top: 0px; /* Position relative to the top of the card */
-    right: 0px; /* Position relative to the right of the card */
-    left: auto; /* Ensure it's not influenced by left positioning */
+    top: 0px;
+    right: 0px;
+    left: auto;
 }
 
 .bottom-right-award {
-    top: 70px; /* Position below the first award badge */
+    top: 70px;
     right: 0px;
     left: auto;
 }
@@ -286,18 +320,9 @@ body {
     left: auto;
 }
 
-
-/* Product Image */
 .product-image {
   max-width: 100%;
   height: auto;
-  /* Removed margin-bottom, let card-body padding handle spacing */
-}
-
-/* Product Information */
-/* Using Bootstrap's card-body with d-flex and flex-column */
-.product-info {
-  /* No custom styles needed here, Bootstrap classes handle it */
 }
 
 .product-name {
@@ -318,17 +343,16 @@ body {
   color: #333;
 }
 
-/* Product Rating (Stars) */
 .product-rating {
-  color: #ccc; /* Default star color (unfilled) */
-  font-size: 1.2em; /* Size of stars */
+  color: #ccc;
+  font-size: 1.2em;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .product-rating .filled-star {
-  color: #ffc107; /* Gold for filled stars */
+  color: black;
 }
 
 .review-count {
@@ -337,18 +361,15 @@ body {
   margin-left: 5px;
 }
 
-/* Add to Bag Button */
 .add-to-bag-button {
   background-color: #d5e2f5;
   color: #043f7a;
   border: none;
-  /* Removed padding, using Bootstrap's py-2 */
-  /* Removed margin-top, using Bootstrap's mb-3 */
   cursor: pointer;
   font-weight: bold;
   text-transform: uppercase;
   transition: background-color 0.3s ease, color 0.3s ease;
-  width: 100%; /* Take full width of parent column */
+  width: 100%;
 }
 
 .add-to-bag-button:hover {

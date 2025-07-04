@@ -20,6 +20,7 @@ export default {
 
 <style>
 @import "@/fonts/fonts.css";
+
 html, body {
   margin: 0;
   padding: 0;
