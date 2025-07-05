@@ -46,7 +46,7 @@
             <h4 class="mb-0 fw-bold">€{{ calculateCartTotal }}</h4>
           </div>
 
-          <button class="btn btn-primary w-100 py-3 mb-3 checkout-main-btn" @click="proceedToCheckout">CHECKOUT! €{{ calculateCartTotal }}</button>
+          <button class="btn btn-primary w-100 py-3 mb-3 checkout-main-btn" >CHECKOUT! €{{ calculateCartTotal }}</button>
 
           <p class="shipping-taxes-info text-muted text-center">Shipping and taxes calculated at checkout</p>
 

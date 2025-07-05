@@ -11,13 +11,14 @@
           <router-link to="/product" class="nav-link">SHOP</router-link>
           <router-link to="/product" class="nav-link">DISCOVER</router-link>
         </div>
-        <div class="navbar-brand nav-center fw-bold fs-4">HEVI</div>
+        <div class="navbar-brand nav-center fw-bold fs-4">NIVA</div>
         <div class="nav-right d-flex gap-4 align-items-center">
           <span class="nav-text d-none d-lg-inline">UNITED STATES / USD</span>
           <span class="nav-text d-none d-md-inline">SUBSCRIBE</span>
-          <i class="fas fa-search"></i>
-          <i class="fas fa-user"></i>
-          <router-link to="/Cart"><i class="fas fa-shopping-cart"></i></router-link>
+           <i class="bi bi-search"></i>
+            <i class="bi bi-person"></i>
+
+          <router-link to="/Cart"><i class="bi bi-bag"></i></router-link>
         </div>
       </div>
     </nav>

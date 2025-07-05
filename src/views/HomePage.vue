@@ -19,9 +19,12 @@
 
         <div class="nav-right d-flex gap-4 align-items-center">
           <span class="nav-text d-none d-lg-inline">SUBSCRIBE</span>
-           <i class="fa-solid fa-magnifying-glass fs-8 my-auto" style="margin-right: 10px;"></i>
-          <i class="fa-regular fa-user"></i>
-          <i class="fa-solid fa-bag-shopping"></i> </div>
+           <div class="d-flex justify-content-center gap-4  my-auto">
+            <i class="bi bi-search"></i>
+            <i class="bi bi-person"></i>
+            <i class="bi bi-bag"></i>
+      </div>
+        </div>
       </div>
     </nav>
 

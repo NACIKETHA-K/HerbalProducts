@@ -3,31 +3,20 @@
     <div class="announcement-bar text-center">
       {{ currentMessage }}
     </div>
-
     <nav class="navbar navbar-expand-lg custom-navbar px-4">
       <div class="container-fluid d-flex justify-content-between align-items-center">
-        <button class="navbar-toggler d-lg-none" type="button" @click="toggleSidebar">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-
-        <div class="nav-left d-none d-lg-flex gap-4">
+        <div class="nav-left d-flex gap-4">
           <router-link to="/product" class="nav-link">SHOP</router-link>
           <router-link to="/product" class="nav-link">DISCOVER</router-link>
         </div>
-
         <div class="navbar-brand nav-center fw-bold fs-4">NIVA</div>
-
         <div class="nav-right d-flex gap-4 align-items-center">
-          <span class="nav-text d-none d-lg-inline">SUBSCRIBE</span>
-          <i class="fa-solid fa-magnifying-glass fs-8 my-auto" style="margin-right: 10px;"></i>
-          <i class="fa-regular fa-user"></i>
-          <router-link to="/cart">
-            <i class="fa-solid fa-bag-shopping position-relative">
-              <span v-if="cartItemCount > 0" class="badge bg-danger rounded-circle position-absolute top-0 start-100 translate-middle fs-6">
-                {{ cartItemCount }}
-              </span>
-            </i>
-          </router-link>
+          <span class="nav-text d-none d-lg-inline">UNITED STATES / USD</span>
+          <span class="nav-text d-none d-md-inline">SUBSCRIBE</span>
+           <i class="bi bi-search"></i>
+            <i class="bi bi-person"></i>
+
+          <router-link to="/Cart"><i class="bi bi-bag"></i></router-link>
         </div>
       </div>
     </nav>
@@ -187,10 +176,9 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
-  name: "ProductPage", // Added component name
+  name: "ProductPage",
   data() {
     return {
       product: null,
@@ -382,55 +370,7 @@ export default {
             author: "Priya M.",
           },
         },
-        // REMOVE THESE EMPTY OBJECTS OR FILL THEM WITH ACTUAL PRODUCT DATA
-        // {
-        //   name: "",
-        //   slug: "product",
-        //   price: "$.00",
-        //   description: "",
-        //   rating: 4,
-        //   reviews: 15,
-        //   inStock: true,
-        //   imageUrl:
-        //     "",
-        //   thumbnailImages: [
-        //     "",
-        //     "",
-        //   ],
-        //   badges: [],
-        //   benefits: ["PORE CLEANING", "GENTLE DETOX"],
-        //   skinTypes: ["Oily", "Acne-Prone"],
-        //   buttonText: "ADD TO BAG",
-        //   customerQuote: {
-        //     text: "Leaves my skin super soft and refreshed!",
-        //     author: "Priya M.",
-        //   },
-        // },
-        // {
-        //   name: "",
-        //   slug: "product",
-        //   price: "$.00",
-        //   description: "",
-        //   rating: 4,
-        //   reviews: 15,
-        //   inStock: true,
-        //   imageUrl:
-        //     "",
-        //   thumbnailImages: [
-        //     "",
-        //     "",
-        //   ],
-        //   badges: [],
-        //   benefits: ["PORE CLEANING", "GENTLE DETOX"],
-        //   skinTypes: ["Oily", "Acne-Prone"],
-        //   buttonText: "ADD TO BAG",
-        //   customerQuote: {
-        //     text: "Leaves my skin super soft and refreshed!",
-        //     author: "Priya M.",
-        //   },
-        // },
       ],
-      // Data properties for announcement bar and navbar from HomePage
       currentIndex: 0,
       currentMessage: "",
       messages: [
@@ -441,41 +381,34 @@ export default {
       messageInterval: null,
       navbarMouseEnterHandler: null,
       navbarMouseLeaveHandler: null,
-      carouselTextOverlay: null, // This might not be needed in ProductPage, but keeping for consistency if other elements rely on it
+      carouselTextOverlay: null,
       announcementBarHoverTimeout: null,
-      isSidebarOpen: false, // New: Controls sidebar visibility
-      cartItemCount: 0, // New: To display cart item count in the navbar
+      isSidebarOpen: false,
+      cartItemCount: 0,
     };
   },
   created() {
     const routeSlug = this.$route.params.name;
-    // Check if routeSlug exists before calling toLowerCase()
     if (routeSlug) {
       this.product = this.allProducts.find(
         (p) => p.slug.toLowerCase() === routeSlug.toLowerCase()
       );
     } else {
-      this.product = null; // Or handle the case where no slug is provided, e.g., redirect to product list
+      this.product = null;
     }
-
     if (this.product) {
       this.selectedImage = this.product.imageUrl;
     }
   },
   mounted() {
-    // Logic for announcement bar messages
     this.currentMessage = this.messages[this.currentIndex];
     this.messageInterval = setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.messages.length;
       this.currentMessage = this.messages[this.currentIndex];
     }, 2000);
-
-    // Logic for navbar scroll behavior
     window.addEventListener("scroll", this.handleScroll);
-
     const announcementBar = document.querySelector(".announcement-bar");
     const customNavbar = document.querySelector(".custom-navbar");
-
     if (customNavbar && announcementBar) {
       this.navbarMouseEnterHandler = () => {
         if (this.announcementBarHoverTimeout) {
@@ -485,7 +418,6 @@ export default {
           announcementBar.classList.add("is-hovered");
         }, 10);
       };
-
       this.navbarMouseLeaveHandler = () => {
         if (this.announcementBarHoverTimeout) {
           clearTimeout(this.announcementBarHoverTimeout);
@@ -493,27 +425,20 @@ export default {
         }
         announcementBar.classList.remove("is-hovered");
       };
-
       customNavbar.addEventListener("mouseenter", this.navbarMouseEnterHandler);
       customNavbar.addEventListener("mouseleave", this.navbarMouseLeaveHandler);
     }
-
-    // Close sidebar if route changes (good for SPA navigation)
     this.$router.afterEach(() => {
       if (this.isSidebarOpen) {
         this.toggleSidebar();
       }
     });
-
-    // Load initial cart count when component mounts
     this.updateCartItemCount();
-    // Listen for custom event from CartPage or other components to update cart count
     window.addEventListener('cart-updated', this.updateCartItemCount);
   },
   beforeUnmount() {
     clearInterval(this.messageInterval);
     window.removeEventListener("scroll", this.handleScroll);
-
     const customNavbar = document.querySelector(".custom-navbar");
     if (customNavbar && this.navbarMouseEnterHandler) {
       customNavbar.removeEventListener("mouseenter", this.navbarMouseEnterHandler);
@@ -523,7 +448,6 @@ export default {
       clearTimeout(this.announcementBarHoverTimeout);
       this.announcementBarHoverTimeout = null;
     }
-    // Ensure body scroll is re-enabled on component unmount
     document.body.style.overflow = '';
     window.removeEventListener('cart-updated', this.updateCartItemCount);
   },
@@ -548,9 +472,9 @@ export default {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
       if (this.isSidebarOpen) {
-        document.body.style.overflow = 'hidden'; // Prevent body scrolling
+        document.body.style.overflow = 'hidden';
       } else {
-        document.body.style.overflow = ''; // Re-enable body scrolling
+        document.body.style.overflow = '';
       }
     },
     addToCart() {
@@ -558,16 +482,11 @@ export default {
         console.warn("No product selected to add to cart.");
         return;
       }
-
       let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-
       const existingItemIndex = cart.findIndex(item => item.slug === this.product.slug);
-
       if (existingItemIndex > -1) {
-        // Item already in cart, update quantity
         cart[existingItemIndex].quantity += this.quantity;
       } else {
-        // Add new item to cart
         cart.push({
           slug: this.product.slug,
           name: this.product.name,
@@ -576,11 +495,8 @@ export default {
           quantity: this.quantity,
         });
       }
-
       localStorage.setItem('cart', JSON.stringify(cart));
-      this.updateCartItemCount(); // Update the cart icon badge
-
-      // Optionally, provide user feedback (e.g., a toast notification)
+      this.updateCartItemCount();
       alert(`${this.quantity} x ${this.product.name} added to cart!`);
     },
     updateCartItemCount() {
@@ -591,170 +507,120 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* Ensure you have Font Awesome imported in your main.js or index.html for icons to show */
-/* Example for main.js: import '@fortawesome/fontawesome-free/css/all.min.css'; */
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-/* Assuming 'LaSegar-Regular' font is defined/imported elsewhere (e.g., public/index.html or a global CSS file) */
-
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
-
-/* Announcement Bar */
 .announcement-bar {
   position: fixed;
   top: 0;
   left: 0;
   height: 30px;
   width: 100%;
-  color: #fff; /* White initially */
-  background-color: transparent;
-  border-bottom: 1px solid white;
+  color: #043f7a;
+  background-color: #d5e2f5;
   font-size: 12px;
   font-weight: 600;
   z-index: 1050;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease, color 0.3s ease, border-bottom 0.3s ease;
 }
-.announcement-bar:hover,
-.announcement-bar.is-hovered {
-  background-color: #e6f0fa; /* Light blue/off-white as per screenshot */
-  color: #000; /* Black text on hover as per screenshot */
-  border-bottom: 1px solid transparent;
-}
-
-/* Custom Navbar */
 .custom-navbar {
   position: fixed;
   top: 30px;
   left: 0;
   width: 100%;
-  background-color: transparent; /* Transparent initially */
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   z-index: 1040;
-  transition: all 0.4s ease;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
-
 .navbar .nav-link,
 .navbar .nav-text,
 .navbar i {
-  color: #000; /* Black initially */
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.navbar-brand {
-  font-family: 'LaSegar-Regular';
-  opacity: 0; /* Starts invisible */
-  transition: opacity 0.3s ease, color 0.3s ease; /* Add color transition */
-}
-
-/* Navbar background changes to white on hover or scroll */
-.custom-navbar:hover,
-.custom-navbar.scrolled {
-  background-color: white;
-}
-
-/* Ensure brand, text, and icons remain black and become visible when navbar background is white */
-.custom-navbar:hover .navbar-brand,
-.custom-navbar:hover .nav-link,
-.custom-navbar:hover .nav-text,
-.custom-navbar:hover i,
-.custom-navbar.scrolled .navbar-brand,
-.custom-navbar.scrolled .nav-link,
-.custom-navbar.scrolled .nav-text,
-.custom-navbar.scrolled i {
   color: #000;
-  opacity: 1; /* Make the brand visible */
+  font-weight: 500;
 }
-
+.navbar-brand {
+  font-family: 'LaSegar-Regular', sans-serif;
+  color: #000;
+  opacity: 1;
+  font-weight: bold;
+}
 .navbar .nav-link:hover,
 .navbar .nav-text:hover,
 .navbar i:hover,
 .navbar-brand:hover {
-  color: #294ea4;
+  color: #000;
 }
-
-/* Cart Icon Badge */
 .fa-bag-shopping {
   position: relative;
 }
-
 .fa-bag-shopping .badge {
-  font-size: 0.6em; /* Adjust size as needed */
+  font-size: 0.6em;
   padding: 0.3em 0.5em;
   line-height: 1;
   border-radius: 50%;
-  top: -5px; /* Adjust vertical position */
-  left: calc(100% - 5px); /* Adjust horizontal position */
-  transform: translate(-50%, -50%); /* Center the badge */
+  top: -5px;
+  left: calc(100% - 5px);
+  transform: translate(-50%, -50%);
 }
-
-
-/* Hamburger Toggler Button */
 .navbar-toggler {
   border: none;
   font-size: 24px;
   padding: 0;
-  color: #000; /* Color of the hamburger icon */
+  color: #000;
 }
 .navbar-toggler:focus {
-  box-shadow: none; /* Remove focus outline */
+  box-shadow: none;
 }
-
-/* --- Sidebar Styles --- */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -300px; /* Hidden by default */
-  width: 300px; /* Width of the sidebar */
-  max-width: 80vw; /* Max width for very small screens */
+  right: -300px;
+  width: 300px;
+  max-width: 80vw;
   height: 100%;
   background-color: white;
-  z-index: 1100; /* Higher than navbar and overlay */
+  z-index: 1100;
   box-shadow: -2px 0 10px rgba(0,0,0,0.3);
   transition: right 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
-  padding-top: 60px; /* Space from top for close button */
+  padding-top: 60px;
 }
-
 .sidebar-open {
-  right: 0; /* Slide in when open */
+  right: 0;
 }
-
 .sidebar-close-btn {
   position: absolute;
   top: 15px;
   right: 20px;
   background: none;
   border: none;
-  font-size: 28px; /* Larger icon */
+  font-size: 28px;
   cursor: pointer;
   color: #000;
 }
-
 .sidebar-nav {
   list-style: none;
   padding: 0;
   margin: 20px 0;
-  flex-grow: 1; /* Allows nav to take available space */
+  flex-grow: 1;
 }
-
 .sidebar-nav li {
   padding: 15px 20px;
   border-bottom: 1px solid #eee;
 }
-
 .sidebar-nav li:last-child {
   border-bottom: none;
 }
-
 .sidebar-nav a {
   text-decoration: none;
   color: #000;
@@ -762,13 +628,11 @@ body {
   font-weight: bold;
   display: block;
   transition: color 0.2s ease;
-  text-transform: uppercase; /* Match navbar style */
+  text-transform: uppercase;
 }
-
 .sidebar-nav a:hover {
   color: #294ea4;
 }
-
 .sidebar-socials {
   padding: 20px;
   display: flex;
@@ -785,7 +649,6 @@ body {
 .sidebar-socials i:hover {
   color: #294ea4;
 }
-
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -793,44 +656,39 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.5);
-  z-index: 1090; /* Below sidebar, above other content */
+  z-index: 1090;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-
 .sidebar-overlay.show-overlay {
   opacity: 1;
   visibility: visible;
 }
-
-/* Shift main content when sidebar is open */
 .main-content {
   transition: transform 0.3s ease-in-out;
+  padding-top: 90px;
 }
-
 .main-content.shifted {
-  transform: translateX(-300px); /* Adjust based on sidebar width */
+  transform: translateX(-300px);
 }
-
-
-/* --- Product Page Specific Styles (Original) --- */
+.product-page-container {
+    padding-top: 0;
+    padding-bottom: 50px;
+}
 .dot {
   height: 8px;
   width: 8px;
   border-radius: 50%;
   display: inline-block;
 }
-
 .rating-stars .star {
   color: lightgray;
   font-size: 1.2em;
 }
-
 .rating-stars .filled-star {
   color: black;
 }
-
 .product-badge {
   background-color: #e0e0e0;
   color: #333;
@@ -839,24 +697,20 @@ body {
   font-weight: bold;
   font-size: 0.75em;
 }
-
 .thumbnail-image {
   cursor: pointer;
   max-width: 100px;
   opacity: 0.7;
   transition: 0.2s;
 }
-
 .thumbnail-image:hover,
 .thumbnail-image.border {
   opacity: 1;
   border: 2px solid #333 !important;
 }
-
 .main-product-image {
   max-width: 100%;
 }
-
 .badge-overlay {
   position: absolute;
   top: 15px;
@@ -869,51 +723,39 @@ body {
   font-size: 0.8em;
   text-transform: uppercase;
 }
-
 .customer-quote {
   background-color: #f8f9fa;
   border-left: 5px solid #ccc;
   font-style: italic;
 }
-
 .subscription-options {
   border: 1px solid #ddd;
   border-radius: 0.5rem;
 }
-
 .add-to-bag-btn {
   background-color: black;
   color: white;
 }
-
 .add-to-bag-btn:hover {
   background-color: #333;
 }
-
-
-/* --- Media Queries for Responsiveness (from HomePage and ProductPage merged) --- */
-
-/* Larger screens (min-width: 992px) - Desktop */
 @media (min-width: 992px) {
   .navbar-toggler {
-    display: none !important; /* Hide hamburger icon on desktop */
+    display: none !important;
   }
-
   .nav-left {
-    display: flex !important; /* Show Shop/Discover links */
+    display: flex !important;
   }
   .sidebar {
-    right: -300px !important; /* Ensure sidebar is hidden on desktop */
-    box-shadow: none; /* Remove shadow if hidden */
-    pointer-events: none; /* Make it unclickable when hidden */
+    right: -300px !important;
+    box-shadow: none;
+    pointer-events: none;
   }
   .sidebar-overlay {
-    display: none !important; /* Hide overlay on desktop */
+    display: none !important;
   }
   .main-content.shifted {
-    transform: translateX(0) !important; /* No shift on desktop */
+    transform: translateX(0) !important;
   }
 }
-
-/* Medium screens and smaller (max-width: 991.98px) - Tablet and Mobile */
 </style>
