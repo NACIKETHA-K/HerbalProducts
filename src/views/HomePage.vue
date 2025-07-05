@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <div class="announcement-bar text-center">
@@ -7,7 +8,7 @@
     <nav class="navbar navbar-expand-lg custom-navbar px-4">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <button class="navbar-toggler d-lg-none" type="button" @click="toggleSidebar">
-          <i class="fa-solid fa-bars"></i>
+          <i class="bi bi-list"></i>
         </button>
 
         <div class="nav-left d-none d-lg-flex gap-4">
@@ -19,11 +20,11 @@
 
         <div class="nav-right d-flex gap-4 align-items-center">
           <span class="nav-text d-none d-lg-inline">SUBSCRIBE</span>
-           <div class="d-flex justify-content-center gap-4  my-auto">
+           <div class="d-flex justify-content-center gap-4 my-auto">
             <i class="bi bi-search"></i>
             <a href="https://www.linkedin.com/in/naciketha-karunanithi-047447277/"><i class="bi bi-person"></i></a>
             <i class="bi bi-bag"></i>
-      </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -35,7 +36,7 @@
       <ul class="sidebar-nav">
         <li><router-link to="/product" @click="toggleSidebar">SHOP</router-link></li>
         <li><router-link to="/product" @click="toggleSidebar">DISCOVER</router-link></li>
-        <li><router-link to="/subscribe" @click="toggleSidebar">SUBSCRIBE</router-link></li>
+        <li><router-link to="/product" @click="toggleSidebar">SUBSCRIBE</router-link></li>
         </ul>
       <div class="sidebar-socials">
           <i class="fa-brands fa-facebook-f"></i>
@@ -102,14 +103,14 @@ export default {
       bannerImages: [
         { image: "girl1.png", alt: "Fashion Model 1" },
         { image: "https://liveaevi.com/cdn/shop/files/Aevi-Web-Homepage-07.png?v=1741127078&width=2000", alt: "Fashion Model 2" },
-        { image: "https://liveaevi.com/cdn/shop/files/Aevi-Web-Homepage-CM-01_fe99e65e-1714-46e0-ae25-984a6ab93898.png?v=1741091835&width=2000", alt: "Fashion Model 3" },
+        { image: "https://liveaevi.com/cdn/shop/files/Aevi-Web-Homepage-CM-01_fe99e66e-1714-46e0-ae25-984a6ab93898.png?v=1741091835&width=2000", alt: "Fashion Model 3" },
       ],
       messageInterval: null,
       navbarMouseEnterHandler: null,
       navbarMouseLeaveHandler: null,
       carouselTextOverlay: null,
       announcementBarHoverTimeout: null,
-      isSidebarOpen: false, // New: Controls sidebar visibility
+      isSidebarOpen: false,
     };
   },
   mounted() {
@@ -136,7 +137,7 @@ export default {
         }
         this.announcementBarHoverTimeout = setTimeout(() => {
           announcementBar.classList.add("is-hovered");
-        }, 10); 
+        }, 10);
       };
 
       this.navbarMouseLeaveHandler = () => {
@@ -155,7 +156,6 @@ export default {
       customNavbar.addEventListener("mouseleave", this.navbarMouseLeaveHandler);
     }
 
-    // Close sidebar if route changes (good for SPA navigation)
     this.$router.afterEach(() => {
       if (this.isSidebarOpen) {
         this.toggleSidebar();
@@ -175,7 +175,6 @@ export default {
       clearTimeout(this.announcementBarHoverTimeout);
       this.announcementBarHoverTimeout = null;
     }
-    // Ensure body scroll is re-enabled on component unmount
     document.body.style.overflow = '';
   },
   methods: {
@@ -187,13 +186,12 @@ export default {
         navbar.classList.remove("scrolled");
       }
     },
-    // New: Method to toggle sidebar visibility
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
       if (this.isSidebarOpen) {
-        document.body.style.overflow = 'hidden'; // Prevent body scrolling
+        document.body.style.overflow = 'hidden';
       } else {
-        document.body.style.overflow = ''; // Re-enable body scrolling
+        document.body.style.overflow = '';
       }
     },
   },
@@ -201,11 +199,7 @@ export default {
 </script>
 
 <style scoped>
-/* Ensure you have Font Awesome imported in your main.js or index.html for icons to show */
-/* Example for main.js: import '@fortawesome/fontawesome-free/css/all.min.css'; */
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-/* Assuming 'LaSegar-Regular' font is defined/imported elsewhere (e.g., public/index.html or a global CSS file) */
 
 body {
   margin: 0;
@@ -213,14 +207,13 @@ body {
   overflow-x: hidden;
 }
 
-/* Announcement Bar */
 .announcement-bar {
   position: fixed;
   top: 0;
   left: 0;
   height: 30px;
   width: 100%;
-  color: #fff; /* White initially */
+  color: #fff;
   background-color: transparent;
   border-bottom: 1px solid white;
   font-size: 12px;
@@ -233,18 +226,17 @@ body {
 }
 .announcement-bar:hover,
 .announcement-bar.is-hovered {
-  background-color: #e6f0fa; /* Light blue/off-white as per screenshot */
-  color: #000; /* Black text on hover as per screenshot */
+  background-color: #e6f0fa;
+  color: #000;
   border-bottom: 1px solid transparent;
 }
 
-/* Custom Navbar */
 .custom-navbar {
   position: fixed;
   top: 30px;
   left: 0;
   width: 100%;
-  background-color: transparent; /* Transparent initially */
+  background-color: transparent;
   z-index: 1040;
   transition: all 0.4s ease;
 }
@@ -252,24 +244,22 @@ body {
 .navbar .nav-link,
 .navbar .nav-text,
 .navbar i {
-  color: #000; /* Black initially */
+  color: #000;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .navbar-brand {
   font-family: 'LaSegar-Regular';
-  opacity: 0; /* Starts invisible */
-  transition: opacity 0.3s ease, color 0.3s ease; /* Add color transition */
+  opacity: 0;
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
 
-/* Navbar background changes to white on hover or scroll */
 .custom-navbar:hover,
 .custom-navbar.scrolled {
   background-color: white;
 }
 
-/* Ensure brand, text, and icons remain black and become visible when navbar background is white */
 .custom-navbar:hover .navbar-brand,
 .custom-navbar:hover .nav-link,
 .custom-navbar:hover .nav-text,
@@ -279,7 +269,7 @@ body {
 .custom-navbar.scrolled .nav-text,
 .custom-navbar.scrolled i {
   color: #000;
-  opacity: 1; /* Make the brand visible */
+  opacity: 1;
 }
 
 .navbar .nav-link:hover,
@@ -289,18 +279,16 @@ body {
   color: #294ea4;
 }
 
-/* Hamburger Toggler Button */
 .navbar-toggler {
   border: none;
   font-size: 24px;
   padding: 0;
-  color: #000; /* Color of the hamburger icon */
+  color: #000;
 }
 .navbar-toggler:focus {
-  box-shadow: none; /* Remove focus outline */
+  box-shadow: none;
 }
 
-/* Carousel Section */
 .carousel-bg {
   height: 100vh;
   width: 100%;
@@ -357,7 +345,6 @@ body {
   color: white;
   border: 1px solid white;
   padding: 10px 60px;
-
   font-size: 1.1em;
   cursor: pointer;
   border-radius: 50px;
@@ -374,10 +361,9 @@ body {
 .carousel-control-prev,
 .carousel-control-next,
 .carousel-indicators {
-  display: none; /* Hide default carousel controls */
+  display: none;
 }
 
-/* Moving Bar Section */
 .moving-bar {
   background-color: #194dc3;
   color: white;
@@ -410,25 +396,24 @@ body {
   100% { transform: translateX(-50%); }
 }
 
-/* --- Sidebar Styles --- */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -300px; /* Hidden by default */
-  width: 300px; /* Width of the sidebar */
-  max-width: 80vw; /* Max width for very small screens */
+  right: -300px;
+  width: 300px;
+  max-width: 80vw;
   height: 100%;
   background-color: white;
-  z-index: 1100; /* Higher than navbar and overlay */
+  z-index: 1100;
   box-shadow: -2px 0 10px rgba(0,0,0,0.3);
   transition: right 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
-  padding-top: 60px; /* Space from top for close button */
+  padding-top: 60px;
 }
 
 .sidebar-open {
-  right: 0; /* Slide in when open */
+  right: 0;
 }
 
 .sidebar-close-btn {
@@ -437,7 +422,7 @@ body {
   right: 20px;
   background: none;
   border: none;
-  font-size: 28px; /* Larger icon */
+  font-size: 28px;
   cursor: pointer;
   color: #000;
 }
@@ -446,7 +431,7 @@ body {
   list-style: none;
   padding: 0;
   margin: 20px 0;
-  flex-grow: 1; /* Allows nav to take available space */
+  flex-grow: 1;
 }
 
 .sidebar-nav li {
@@ -465,7 +450,7 @@ body {
   font-weight: bold;
   display: block;
   transition: color 0.2s ease;
-  text-transform: uppercase; /* Match navbar style */
+  text-transform: uppercase;
 }
 
 .sidebar-nav a:hover {
@@ -496,7 +481,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.5);
-  z-index: 1090; /* Below sidebar, above other content */
+  z-index: 1090;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -507,48 +492,41 @@ body {
   visibility: visible;
 }
 
-/* Shift main content when sidebar is open */
 .main-content {
   transition: transform 0.3s ease-in-out;
 }
 
 .main-content.shifted {
-  transform: translateX(-300px); /* Adjust based on sidebar width */
+  transform: translateX(-300px);
 }
 
-
-/* --- Media Queries for Responsiveness --- */
-
-/* Larger screens (min-width: 992px) - Desktop */
 @media (min-width: 992px) {
   .navbar-toggler {
-    display: none !important; /* Hide hamburger icon on desktop */
+    display: none !important;
   }
 
   .nav-left {
-    display: flex !important; /* Show Shop/Discover links */
+    display: flex !important;
   }
   .sidebar {
-      right: -300px !important; /* Ensure sidebar is hidden on desktop */
-      box-shadow: none; /* Remove shadow if hidden */
-      pointer-events: none; /* Make it unclickable when hidden */
+      right: -300px !important;
+      box-shadow: none;
+      pointer-events: none;
   }
   .sidebar-overlay {
-      display: none !important; /* Hide overlay on desktop */
+      display: none !important;
   }
   .main-content.shifted {
-      transform: translateX(0) !important; /* No shift on desktop */
+      transform: translateX(0) !important;
   }
 }
 
-/* Medium screens and smaller (max-width: 991.98px) - Tablet and Mobile */
 @media (max-width: 991.98px) {
     .nav-text {
-        display: none !important; /* Hide 'SUBSCRIBE' text on smaller screens */
+        display: none !important;
     }
 }
 
-/* Tablet portrait and smaller (max-width: 768px) */
 @media (max-width: 768px) {
   .carousel-text-overlay {
     font-size: 30vw;
@@ -574,10 +552,8 @@ body {
     .carousel-subtext {
     font-size: 5vh;
   }
-  
 }
 
-/* Mobile portrait (max-width: 576px) */
 @media (max-width: 576px) {
   .carousel-text-overlay {
     text-align: center;
@@ -588,7 +564,6 @@ body {
     font-size: 5vh;
   }
   .shop-now-btn {
-
     padding: 10px 0px 10px;
     width: 260px;
     border-radius:50px ;
@@ -606,7 +581,6 @@ body {
       top: 25px;
       padding: 0 15px !important;
   }
-  /* On very small screens, adjust carousel bottom left content */
   .carousel-bottom-left-content {
       left: 15px;
       bottom: 30%;

@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/views/HomePage.vue';
 import Productpage from '@/views/Productpage.vue';
 import CartPage from '@/views/CartPage.vue';
+import CartPayment from '@/views/CartPayment.vue';
+import PaymentFinal from '@/views/PaymentFinal.vue';
 
 
 const routes = [
@@ -25,9 +27,19 @@ const routes = [
   path:'/cart',
   name:'Cart',
 component:CartPage
-
-
+},
+{
+  path:'/payment',
+  name:'payment',
+component:CartPayment
 }
+,
+{
+  path:'/paymentstatus',
+  name:'paymentstatus',
+component:PaymentFinal
+}
+,
 
 
 ]

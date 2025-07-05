@@ -103,7 +103,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'CartPage',
@@ -170,7 +169,10 @@ export default {
     },
     proceedToCheckout() {
       localStorage.setItem('totalPrice', this.calculateCartTotal);
-      this.$router.push({ name: 'cart-payment' });
+      localStorage.removeItem('cart');
+      this.cart = [];
+      this.updateCartGlobal();
+      this.$router.push({ name: 'payment' }); // Adjust this route name if needed
     },
     handleScroll() {
       const navbar = document.querySelector(".custom-navbar");
@@ -205,6 +207,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
