@@ -21,7 +21,7 @@
           <span class="nav-text d-none d-lg-inline">SUBSCRIBE</span>
            <div class="d-flex justify-content-center gap-4  my-auto">
             <i class="bi bi-search"></i>
-            <i class="bi bi-person"></i>
+            <a href="https://www.linkedin.com/in/naciketha-karunanithi-047447277/"><i class="bi bi-person"></i></a>
             <i class="bi bi-bag"></i>
       </div>
         </div>
@@ -356,10 +356,11 @@ body {
   background-color: rgba(178, 206, 237, 0.7);
   color: white;
   border: 1px solid white;
-  padding: 15px 30px;
+  padding: 10px 60px;
+
   font-size: 1.1em;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 50px;
   font-weight: bold;
   text-transform: uppercase;
   transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -550,16 +551,12 @@ body {
 /* Tablet portrait and smaller (max-width: 768px) */
 @media (max-width: 768px) {
   .carousel-text-overlay {
-    font-size: 8vw;
+    font-size: 30vw;
     top: 30%;
   }
   .carousel-subtext {
     font-size: clamp(1rem, 2vw, 2rem);
     margin-bottom: 20px;
-  }
-  .shop-now-btn {
-    padding: 10px 20px;
-    font-size: 0.9em;
   }
   .moving-bar {
     font-size: 18px;
@@ -574,24 +571,32 @@ body {
   .nav-left, .nav-right {
       gap: 15px !important;
   }
+    .carousel-subtext {
+    font-size: 5vh;
+  }
+  
 }
 
 /* Mobile portrait (max-width: 576px) */
 @media (max-width: 576px) {
   .carousel-text-overlay {
-    font-size: 7vw;
-    top: 25%;
+    text-align: center;
+    font-size: 28vw;
+    top: 30%;
   }
   .carousel-subtext {
-    font-size: clamp(0.9rem, 1.8vw, 1.8rem);
+    font-size: 5vh;
   }
   .shop-now-btn {
-    padding: 8px 15px;
-    font-size: 0.8em;
+
+    padding: 10px 0px 10px;
+    width: 260px;
+    border-radius:50px ;
   }
+
   .moving-bar {
-    font-size: 14px;
-    padding: 15px 0;
+    font-size: 25px;
+    padding: 33px 0;
   }
   .announcement-bar {
       font-size: 10px;
@@ -604,7 +609,7 @@ body {
   /* On very small screens, adjust carousel bottom left content */
   .carousel-bottom-left-content {
       left: 15px;
-      bottom: 8%;
+      bottom: 30%;
       width: calc(100% - 30px);
   }
 }

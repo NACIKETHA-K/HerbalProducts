@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="contain">
     <div class="announcement-bar text-center">
       {{ currentMessage }}
     </div>
@@ -233,18 +233,18 @@ export default {
           },
         },
         {
-          name: "CLARIFYING CLAY MASK",
+          name: "Sunscreen for Face with SPF",
           slug: "product2",
           price: "$38.00",
-          description: "Detoxifying Natural Blue Clays and Minerals",
+          description: "Anthelios Tinted Mineral Sunscreen is now available in four flexible shades: Tinted, Medium, Medium-Deep, and Deep. Formulated with iron oxides, this 100% mineral sunscreen has a subtle, blendable tint that leaves a healthy glow without white cast when worn alone. ",
           rating: 4,
           reviews: 15,
           inStock: true,
           imageUrl:
             "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwdd860fb8/product/March%202023%20packshot%20updates/883140020899-1_Anthelios50_TintedMineral_LightFluid_50ml.jpg",
           thumbnailImages: [
-            "https://via.placeholder.com/100x100?text=Mask1",
-            "https://via.placeholder.com/100x100?text=Mask2",
+            "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw98554da9/img/antheliosmineraltintedsunscreen/LaRochePosay-Product-AntheliosMineral-ATFIngredients-REV.jpg?sw=1080&sh=1080&sm=cut&sfrm=jpg&q=70",
+            "https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw1e5826f6/img/antheliosmineraltintedsunscreen/06_Anthelios-Mineral-Tinted-PRODUCT-HIGHLIGHTS-2.jpg?sw=1080&sh=1080&sm=cut&sfrm=jpg&q=70",
           ],
           badges: [],
           benefits: ["PORE CLEANING", "GENTLE DETOX"],
@@ -514,6 +514,9 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+}
+.contain{
+  font-family: poppins;
 }
 .announcement-bar {
   position: fixed;
