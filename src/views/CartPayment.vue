@@ -65,7 +65,7 @@
                   </p>
 
                   <div class="total-amount-display my-4">
-                    INR {{ totalPrice.toFixed(2) }} <span class="total-payable-text">(Total Amount Payable)</span>
+                    USD {{ totalPrice.toFixed(2) }} <span class="total-payable-text">(Total Amount Payable)</span>
                   </div>
 
                   <button class="btn btn-success w-100 make-payment-btn mb-2" @click="makePayment">Make Payment</button>
@@ -108,7 +108,7 @@
                   </p>
 
                   <div class="total-amount-display my-4">
-                    INR {{ totalPrice.toFixed(2) }} <span class="total-payable-text">(Total Amount Payable)</span>
+                    USD {{ totalPrice.toFixed(2) }} <span class="total-payable-text">(Total Amount Payable)</span>
                   </div>
 
                   <button class="btn btn-success w-100 make-payment-btn mb-2" @click="makePayment">Make Payment</button>
@@ -164,7 +164,7 @@
                   </p>
 
                   <div class="total-amount-display my-4">
-                    INR {{ totalPrice.toFixed(2) }} <span class="total-payable-text">(Total Amount Payable)</span>
+                    USD {{ totalPrice.toFixed(2) }} <span class="total-payable-text">(Total Amount Payable)</span>
                   </div>
 
                   <button class="btn btn-success w-100 make-payment-btn mb-2" @click="makePayment">Make Payment</button>
@@ -184,12 +184,12 @@
             </div>
             <div class="d-flex justify-content-between mb-2">
               <span class="detail-label">Order Amount:</span>
-              <span class="detail-value">INR {{ (totalPrice * 0.95).toFixed(2) }}</span>
+              <span class="detail-value">USD {{ (totalPrice * 0.95).toFixed(2) }}</span>
             </div>
             <hr>
             <div class="d-flex justify-content-between align-items-center">
               <span class="total-label">Total Amount</span>
-              <span class="final-total-amount">INR {{ totalPrice.toFixed(2) }}</span>
+              <span class="final-total-amount">USD {{ totalPrice.toFixed(2) }}</span>
             </div>
           </div>
         </div>

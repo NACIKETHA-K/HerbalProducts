@@ -42,7 +42,7 @@
               </div>
               <div class="col-md-6 col-8 item-details">
                 <h5 class="item-name">{{ item.name }}</h5>
-                <p class="mb-1 item-price">€{{ parsePrice(item.price).toFixed(2) }}</p>
+                <p class="mb-1 item-price">${{ parsePrice(item.price).toFixed(2) }}</p>
                 <div class="quantity-controls d-flex align-items-center">
                   <span class="mb-0 me-2 quantity-text">Quantity: {{ item.quantity }}</span>
                   <button class="btn btn-sm btn-outline-secondary qty-btn" @click="decreaseQuantity(index)">-</button>
@@ -51,7 +51,7 @@
                 </div>
               </div>
               <div class="col-md-4 item-total-section mt-3 mt-md-0">
-                <p class="fw-bold mb-0 total-price text-md-end">€{{ calculateItemTotal(item) }}</p>
+                <p class="fw-bold mb-0 total-price text-md-end">${{ calculateItemTotal(item) }}</p>
                 <button class="btn btn-sm btn-link remove-btn-desktop d-none d-md-block" @click="removeFromCart(index)">
                   <i class="bi bi-x-lg"></i>
                 </button>
@@ -71,10 +71,10 @@
 
             <div class="d-flex justify-content-between align-items-baseline mb-4 summary-total-line">
               <h4 class="mb-0">TOTAL</h4>
-              <h4 class="mb-0 fw-bold">€{{ calculateCartTotal }}</h4>
+              <h4 class="mb-0 fw-bold">${{ calculateCartTotal }}</h4>
             </div>
 
-            <button class="btn btn-primary w-100 py-3 mb-3 checkout-main-btn" @click="proceedToCheckout">CHECKOUT! €{{ calculateCartTotal }}</button>
+            <button class="btn btn-primary w-100 py-3 mb-3 checkout-main-btn" @click="proceedToCheckout">CHECKOUT! ${{ calculateCartTotal }}</button>
 
             <p class="shipping-taxes-info text-muted text-center">Shipping and taxes calculated at checkout</p>
 
